@@ -199,6 +199,8 @@ def main(wf):
             arg=e.path,
             uid=e.path,
             copytext=e.path,
+            largetext=e.path,
+            type='file',
             valid=True,
             icon=e.path,
             icontype='fileicon')

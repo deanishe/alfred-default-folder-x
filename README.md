@@ -1,20 +1,22 @@
-# Default Folder X for Alfred #
+# Default Folder X for Alfred 2 #
 
-Show and search Default Folder X favourites and recent items in Alfred 2.
+Show and search Default Folder X favourites and recent items in [Alfred 2][alfredapp].
 
 
 ## Usage ##
 
-- `keyword` — What gets shown…
-    - `↩` or `⌘+<NUM>` — Action description…
-        - `⌘+↩` — Alternate action description…
-        - `⌥+↩` — Alternate action description…
-        - `^+↩` — Alternate action description…
-        - `⇧+↩` — Alternate action description…
-        - `fn+↩` — Alternate action description…
-    - `⇥` — Expansion description…
-    - `⌘+C` — What gets copied…
-    - `⌘+L` — What gets shown large…
+- `dfx` — Show/search all DFX favourite/recent items.
+    - `↩` or `⌘+<NUM>` — Open in Finder/default application.
+    - `⌘+C` — Copy path to clipboard.
+    - `⌘+L` — Show path in Alfred's Large Text window.
+- `dfxf` — Show/search only DFX favourite folders.
+    - `↩` or `⌘+<NUM>` — Open in Finder/default application.
+    - `⌘+C` — Copy path to clipboard.
+    - `⌘+L` — Show path in Alfred's Large Text window.
+- `dfxr` — Show/search only DFX recent files/folders.
+    - `↩` or `⌘+<NUM>` — Open in Finder/default application.
+    - `⌘+C` — Copy path to clipboard.
+    - `⌘+L` — Show path in Alfred's Large Text window.
 
 
 ## Licencing, thanks ##
@@ -33,3 +35,4 @@ It is based on the [Alfred-Workflow][aw] library, which is also released under t
 
 [mit]: ./src/LICENCE.txt
 [aw]: http://www.deanishe.net/alfred-workflow/
+[alfredapp]: https://www.alfredapp.com/
