@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>net.deanishe.alfred-dfx</string>
+	<key>connections</key>
+	<dict>
+		<key>0801849E-1043-4E4A-9B36-254E3A79F6D3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89615954-6391-4A1A-AC66-869850ABD4F2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>38E11101-AAAA-44A3-9388-DDC176D6E5CD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89615954-6391-4A1A-AC66-869850ABD4F2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>B7846712-5833-49E1-B55C-47EAF187AD0E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89615954-6391-4A1A-AC66-869850ABD4F2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Dean Jackson</string>
+	<key>description</key>
+	<string>Show and search Default Folder X favourites and recent items in Alfred 2.</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Default Folder X</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>dfx</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching your stuff from DFX…</string>
+				<key>script</key>
+				<string>export LC_CTYPE=en_US.UTF-8
+
+/usr/bin/python dfx.py "{query}"</string>
+				<key>subtext</key>
+				<string>DFX favourite and recent folders/files</string>
+				<key>title</key>
+				<string>Default Folder X Folders</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>B7846712-5833-49E1-B55C-47EAF187AD0E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict/>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>89615954-6391-4A1A-AC66-869850ABD4F2</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>dfxf</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching your stuff from DFX…</string>
+				<key>script</key>
+				<string>export LC_CTYPE=en_US.UTF-8
+
+/usr/bin/python dfx.py -t fav "{query}"</string>
+				<key>subtext</key>
+				<string>Search your DFX favourite folders</string>
+				<key>title</key>
+				<string>Default Folder X Favourites</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>0801849E-1043-4E4A-9B36-254E3A79F6D3</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>dfxr</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching your stuff from DFX…</string>
+				<key>script</key>
+				<string>export LC_CTYPE=en_US.UTF-8
+
+/usr/bin/python dfx.py -t rfile -t rfolder "{query}"</string>
+				<key>subtext</key>
+				<string>Search your DFX recent files and folders</string>
+				<key>title</key>
+				<string>Default Folder X Recent Items</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>38E11101-AAAA-44A3-9388-DDC176D6E5CD</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>0801849E-1043-4E4A-9B36-254E3A79F6D3</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>38E11101-AAAA-44A3-9388-DDC176D6E5CD</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>89615954-6391-4A1A-AC66-869850ABD4F2</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>B7846712-5833-49E1-B55C-47EAF187AD0E</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://www.deanishe.net/</string>
+</dict>
+</plist>
