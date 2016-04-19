@@ -27,6 +27,8 @@ The main workflow icon is the property of the [magnificent folks at St. Clair So
 
 It is based on the [Alfred-Workflow][aw] library, which is also released under the [MIT licence][mit].
 
+This bloody useful workflow would not exist but for [nickwild][nickwild].
+
 
 ## Changelog ##
 
@@ -43,3 +45,4 @@ It is based on the [Alfred-Workflow][aw] library, which is also released under t
 [aw]: http://www.deanishe.net/alfred-workflow/
 [alfredapp]: https://www.alfredapp.com/
 [stclair]: http://www.stclairsoft.com/
+[nickwild]: http://www.alfredforum.com/user/798-nickwild/
