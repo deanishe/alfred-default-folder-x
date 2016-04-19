@@ -26,12 +26,11 @@ Options:
 from __future__ import print_function, unicode_literals, absolute_import
 
 from collections import namedtuple
-import os
-import subprocess
 import sys
 
 import docopt
 from workflow import Workflow, ICON_WARNING
+from workflow.background import is_running, run_in_background
 
 log = None
 
@@ -45,117 +44,15 @@ UPDATE_SETTINGS = {
 
 HELP_URL = 'https://github.com/deanishe/alfred-default-folder-x/issues'
 
+# Where data will be cached by `update.py`
+DFX_CACHE_KEY = 'dfx-entries'
+MAX_CACHE_AGE = 10  # seconds
 
 # Data model. `type` is one of 'fav', 'rfolder' or 'rfile'
 # ("favorite", "recent folder" and "recent file" respectively)
 # `name` is the basename of `path` and `pretty_path` is `path` with
 # $HOME replaced with ~
 DfxEntry = namedtuple('DfxEntry', ['type', 'path', 'name', 'pretty_path'])
-
-
-#                            oo            dP
-#                                          88
-# .d8888b. .d8888b. 88d888b. dP 88d888b. d8888P .d8888b.
-# Y8ooooo. 88'  `"" 88'  `88 88 88'  `88   88   Y8ooooo.
-#       88 88.  ... 88       88 88.  .88   88         88
-# `88888P' `88888P' dP       dP 88Y888P'   dP   `88888P'
-#                               88
-#                               dP
-
-AS_DFX_FOLDERS = """
-(*
-Print a list of Default Folder X's favourite and recent
-folders and files to STDOUT.
-
-The output is TSV format. Each line has 2 columns: the type of
-the path ("fav", "rfolder" or "rfile" for favorites, recent folders
-and recent files respectively), and the absolute path.
-*)
-
--- Return array of DFX folders
--- Each result item is a 2-length array of `type`, `POSIX path`
-on dxFolders()
-    set thePaths to {}
-    tell application "Default Folder X"
-        repeat with thePath in GetFavoriteFolders
-            set the end of thePaths to {"fav", POSIX path of thePath}
-        end repeat
-        repeat with thePath in GetRecentFolders
-            set the end of thePaths to {"rfolder", POSIX path of thePath}
-        end repeat
-        repeat with thePath in GetRecentFiles
-            set the end of thePaths to {"rfile", POSIX path of thePath}
-        end repeat
-    end tell
-    return thePaths
-end dxFolders
-
--- Retrieve list of DFX's folders and files, and output
--- them to STDOUT as TSV lines.
-on run (argv)
-    set output to ""
-    repeat with theItem in my dxFolders()
-        if output is not "" then
-            set output to output & linefeed
-        end if
-        set theLine to (item 1 of theItem) & tab & (item 2 of theItem)
-        set output to output & theLine
-    end repeat
-    return output
-end run
-"""
-
-
-# dP                dP
-# 88                88
-# 88d888b. .d8888b. 88 88d888b. .d8888b. 88d888b. .d8888b.
-# 88'  `88 88ooood8 88 88'  `88 88ooood8 88'  `88 Y8ooooo.
-# 88    88 88.  ... 88 88.  .88 88.  ... 88             88
-# dP    dP `88888P' dP 88Y888P' `88888P' dP       `88888P'
-#                      88
-#                      dP
-
-def run_as(script, *args):
-    """Run an AppleScript and return the output.
-    Args:
-        script (str): The AppleScript to run.
-        *args: Additional arguments to `/usr/bin/osascript`.
-    Returns:
-        str: The output (on STDOUT) of the executed script.
-    """
-    cmd = ('/usr/bin/osascript', '-l', 'AppleScript', '-e', script) + args
-    return subprocess.check_output(cmd)
-
-
-def get_dfx_data():
-    """Return DFX favourites and recent items.
-
-    Returns:
-        list: Sequence of `DfxEntry` objects.
-    """
-    output = wf.decode(run_as(AS_DFX_FOLDERS))
-
-    entries = []
-
-    home = os.getenv('HOME')
-    for line in [s.strip() for s in output.split('\n') if s.strip()]:
-        row = line.split('\t')
-        if len(row) != 2:
-            log.warning('Invalid output from DFX : %r', line)
-            continue
-        typ, path = row
-        # Remove trailing slash from path or things go wrong...
-        path = path.rstrip('/')
-        e = DfxEntry(
-            typ,
-            path,
-            os.path.basename(path),
-            path.replace(home, '~'),
-        )
-        log.debug('entry=%r', e)
-        entries.append(e)
-
-    return entries
 
 
 #                            oo            dP
@@ -167,34 +64,83 @@ def get_dfx_data():
 #                               88
 #                               dP
 
+def prefix_name(entry):
+    """Prepend a Unicode icon to `entry.name` based on `entry.type`.
+
+    Args:
+        entry (DfxEntry): `DfxEntry` or something else with `type`
+            and `name` properties.
+
+    Returns:
+        unicode: `entry.name` with Unicode icon prefix.
+    """
+    if entry.type == 'fav':
+        prefix = '\U00002764'  # HEAVY BLACK HEART
+    else:
+        prefix = '\U0001F55E'  # CLOCK FACE THREE-THIRTY
+
+    return '{} {}'.format(prefix, entry.name)
+
+
 def main(wf):
     """Run workflow script."""
-    args = docopt.docopt(__doc__, argv=wf.args, version=wf.version)
-    query = args.get('<query>')
+    # Parse input ------------------------------------------------------
+    # Call this to ensure magic arguments are parsed
+    wf.args
+    args = docopt.docopt(__doc__, version=wf.version)
+    query = args.get('<query>') or b''
+    query = wf.decode(query).strip()
     types = args.get('--type')
     log.debug('args=%r', args)
 
-    # Get DFX data. Keep in cache for 30 seconds to improve performance
-    entries = wf.cached_data('dfx-entries', get_dfx_data, max_age=30)
+    # Load data --------------------------------------------------------
+    # Load cached entries first and start update if they've
+    # expired (or don't exist)
+    entries = wf.cached_data(DFX_CACHE_KEY, max_age=0)
+    if not entries or not wf.cached_data_fresh(DFX_CACHE_KEY, MAX_CACHE_AGE):
+        if not is_running('update'):
+            run_in_background(
+                'update',
+                ['/usr/bin/python', wf.workflowfile('update.py')]
+            )
 
-    # Filter entries by type
+    # No data in cache yet. Show warning and exit.
+    if entries is None:
+        wf.add_item('Waiting for Default Folder X data…',
+                    'Please try again in a second or two',
+                    icon=ICON_WARNING)
+        wf.send_feedback()
+        return
+
+    # Filter entries ---------------------------------------------------
     if types != ['all']:
-        log.debug('Filtering by types : %r', types)
+        log.debug('Filtering for types : %r', types)
         entries = [e for e in entries if e.type in types]
 
     # Filter data against query if there is one
     if query:
         entries = wf.filter(query, entries, lambda e: e.name, min_score=30)
 
+    # Display results --------------------------------------------------
     if not entries:
         wf.add_item(
             'Nothing found',
             'Try a different query?',
             icon=ICON_WARNING)
 
+    # Don't add duplicate entries for paths in both favourites and recent
+    seen = set()
     for e in entries:
+        if e.path in seen:
+            continue
+
+        if types == ['all']:
+            title = prefix_name(e)
+        else:
+            title = e.name
+
         wf.add_item(
-            e.name,
+            title,
             e.pretty_path,
             arg=e.path,
             uid=e.path,
@@ -204,6 +150,8 @@ def main(wf):
             valid=True,
             icon=e.path,
             icontype='fileicon')
+
+        seen.add(e.path)
 
     wf.send_feedback()
 

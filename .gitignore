@@ -58,6 +58,7 @@ Session.vim
 .python-version
 
 # Packages
+*.dist-info/
 *.egg
 *.egg-info/
 dist/
