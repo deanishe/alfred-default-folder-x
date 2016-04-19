@@ -45,4 +45,4 @@ This bloody useful workflow would not exist but for [nickwild][nickwild].
 [aw]: http://www.deanishe.net/alfred-workflow/
 [alfredapp]: https://www.alfredapp.com/
 [stclair]: http://www.stclairsoft.com/
-[nickwild]: http://www.alfredforum.com/user/798-nickwild/
+[nickwild]: http://www.alfredforum.com/topic/8695-default-folder-x/
