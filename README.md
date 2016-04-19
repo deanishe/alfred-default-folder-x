@@ -23,6 +23,8 @@ Show and search Default Folder X favourites and recent items in [Alfred 2][alfre
 
 This workflow is released under the [MIT licence][mit].
 
+The main workflow icon is the property of the [magnificent folks at St. Clair Software][stclair].
+
 It is based on the [Alfred-Workflow][aw] library, which is also released under the [MIT licence][mit].
 
 
@@ -32,7 +34,12 @@ It is based on the [Alfred-Workflow][aw] library, which is also released under t
 
 - First release
 
+### 0.2.0 ###
+
+- Update folders in background
+- Add auto-update info
 
 [mit]: ./src/LICENCE.txt
 [aw]: http://www.deanishe.net/alfred-workflow/
 [alfredapp]: https://www.alfredapp.com/
+[stclair]: http://www.stclairsoft.com/
