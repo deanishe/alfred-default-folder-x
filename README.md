@@ -1,6 +1,9 @@
-# Default Folder X for Alfred 2 #
 
-Show and search Default Folder X favourites and recent items in [Alfred 2][alfredapp].
+Default Folder X for Alfred
+===========================
+
+
+Show and search Default Folder X favourites and recent items in [Alfred 2 & 3][alfredapp].
 
 
 ## Usage ##
