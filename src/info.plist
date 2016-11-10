@@ -15,6 +15,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>38E11101-AAAA-44A3-9388-DDC176D6E5CD</key>
@@ -26,6 +28,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>B7846712-5833-49E1-B55C-47EAF187AD0E</key>
@@ -37,13 +41,15 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Dean Jackson</string>
 	<key>description</key>
-	<string>Show and search Default Folder X favourites and recent items in Alfred 2.</string>
+	<string>Show and search Default Folder X favourites and recent items.</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -53,6 +59,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -73,6 +81,10 @@
 				<string>export LC_CTYPE=en_US.UTF-8
 
 /usr/bin/python dfx.py "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>DFX favourite and recent folders/files</string>
 				<key>title</key>
@@ -87,21 +99,28 @@
 			<key>uid</key>
 			<string>B7846712-5833-49E1-B55C-47EAF187AD0E</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
-			<dict/>
+			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string></string>
+			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openfile</string>
 			<key>uid</key>
 			<string>89615954-6391-4A1A-AC66-869850ABD4F2</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -122,6 +141,10 @@
 				<string>export LC_CTYPE=en_US.UTF-8
 
 /usr/bin/python dfx.py -t fav "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>Search your DFX favourite folders</string>
 				<key>title</key>
@@ -136,11 +159,13 @@
 			<key>uid</key>
 			<string>0801849E-1043-4E4A-9B36-254E3A79F6D3</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -161,6 +186,10 @@
 				<string>export LC_CTYPE=en_US.UTF-8
 
 /usr/bin/python dfx.py -t rfile -t rfolder "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>Search your DFX recent files and folders</string>
 				<key>title</key>
@@ -175,7 +204,7 @@
 			<key>uid</key>
 			<string>38E11101-AAAA-44A3-9388-DDC176D6E5CD</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -184,26 +213,40 @@
 	<dict>
 		<key>0801849E-1043-4E4A-9B36-254E3A79F6D3</key>
 		<dict>
+			<key>note</key>
+			<string>Show DFX favourites</string>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<integer>200</integer>
 		</dict>
 		<key>38E11101-AAAA-44A3-9388-DDC176D6E5CD</key>
 		<dict>
+			<key>note</key>
+			<string>Show DFX recent files</string>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>250</real>
+			<integer>360</integer>
 		</dict>
 		<key>89615954-6391-4A1A-AC66-869850ABD4F2</key>
 		<dict>
+			<key>xpos</key>
+			<integer>400</integer>
 			<key>ypos</key>
-			<real>10</real>
+			<integer>200</integer>
 		</dict>
 		<key>B7846712-5833-49E1-B55C-47EAF187AD0E</key>
 		<dict>
+			<key>note</key>
+			<string>Show all DFX items (favourites &amp; recent)</string>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>10</real>
+			<integer>30</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string>http://www.deanishe.net/</string>
+	<string>https://github.com/deanishe/alfred-default-folder-x</string>
 </dict>
 </plist>
